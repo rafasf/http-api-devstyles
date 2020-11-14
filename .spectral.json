@@ -1,0 +1,84 @@
+{
+  "extends": "spectral:oas",
+  "documentationUrl": "https://example.com/http-api.md",
+  "rules": {
+    "openapi-tags": "error",
+    "path-keys-no-trailing-slash": "error",
+
+    "paths-kebab-case": {
+      "severity": "error",
+      "description": "Paths are kebab-case.",
+      "message": "{{property}} should be kebab-case (lower case and separated with hyphens)",
+      "given": "$.paths[*]~",
+      "then": {
+        "function": "pattern",
+        "functionOptions": {
+          "match": "^(/|[a-z0-9-.]+|{[a-zA-Z0-9_]+})+$"
+        }
+      }
+    },
+
+    "response-codes": {
+      "severity": "error",
+      "description": "Only a subset of codes supposed to be used.",
+      "message": "{{property}} is not supposed to be used.",
+      "given": "$.paths.[*].responses",
+      "then": {
+        "field": "@key",
+        "function": "pattern",
+        "functionOptions": {
+          "match": "(200|201|202|204|400|401|403|404|405|406|415|422|429|500|503|default)"
+        }
+      }
+    },
+
+    "body-on-gets": {
+      "severity": "error",
+      "description": "A GET request must not accept a body.",
+      "given": "$.paths..get",
+      "then": {
+        "field": "requestBody",
+        "function": "falsy"
+      }
+    },
+
+    "x-headers": {
+      "severity": "error",
+      "description": "Please do not use headers with X-",
+      "message": "Headers cannot start with X-, so please find a new name for {{property}}. More: https://tools.ietf.org/html/rfc6648",
+      "given": "$..parameters.[?(@.in === 'header')].name",
+      "then": {
+        "function": "pattern",
+        "functionOptions": {
+          "notMatch": "^(x|X)-"
+        }
+      }
+    },
+
+    "unknown-error-format": {
+      "severity": "error",
+      "description": "Error response must follow known structure.",
+      "given": "$.paths.[*].responses[?(@property.match(/^(4|5)/))].content.*~",
+      "then": {
+        "function": "enumeration",
+        "functionOptions": {
+          "values": [
+            "application/vnd.api+json",
+            "application/problem+xml",
+            "application/problem+json"
+          ]
+        }
+      }
+    },
+
+    "default-response": {
+      "severity": "error",
+      "description": "Responses should be explicit.",
+      "given": "$.paths.[*].responses",
+      "then": {
+        "field": "default",
+        "function": "falsy"
+      }
+    }
+  }
+}
