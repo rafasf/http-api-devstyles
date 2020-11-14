@@ -1,4 +1,5 @@
 import de.undercouch.gradle.tasks.download.Download
+import org.apache.tools.ant.taskdefs.condition.Os.*
 
 plugins {
     id("devstyles.kotlin-application-conventions")
@@ -20,7 +21,9 @@ tasks.register<Download>("spectral") {
     val endLocation = File(".", "spectral")
     endLocation.setExecutable(true)
 
-    src("https://github.com/stoplightio/spectral/releases/download/v5.7.1/spectral-macos")
+    val desiredApp = if (isFamily(FAMILY_MAC)) "spectral-macos" else "spectral-linux"
+
+    src("https://github.com/stoplightio/spectral/releases/download/v5.7.1/$desiredApp")
     dest(endLocation)
     overwrite(false)
 }
