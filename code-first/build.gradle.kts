@@ -17,23 +17,34 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
 }
 
-tasks.register<Download>("spectral") {
+tasks.register<Exec>("spectralMakeExecutable") {
+    description = "Ensures the application can run."
+    group = "apiSpec"
+
+    commandLine("chmod", "700", "$rootDir/spectral")
+}
+
+tasks.register<Download>("spectralDownload") {
+    description = "Downloads Spectral."
+    group = "apiSpec"
+
     val currentOs = DefaultNativePlatform.getCurrentOperatingSystem()
 
     val desiredApp = if (currentOs.isMacOsX) "spectral-macos" else "spectral-linux"
     println("${currentOs.displayName} detected, dowloading $desiredApp.")
 
-    val endLocation = File(".", "spectral")
-    endLocation.setExecutable(true)
-
     src("https://github.com/stoplightio/spectral/releases/download/v5.7.1/$desiredApp")
-    dest(endLocation)
-    overwrite(false)
+    dest(File(rootDir, "spectral"))
+
+    finalizedBy("spectralMakeExecutable")
 }
 
-tasks.register<Exec>("api-spec") {
+tasks.register<Exec>("apiStyleCheck") {
+    description = "Checks if HTTP API follows basic rules."
+    group = "apiSpec"
+
     dependsOn(
-        tasks.findByName("spectral"),
+        tasks.findByName("spectralDownload"),
         tasks.findByName("generateOpenApiDocs")
     )
 
@@ -49,5 +60,5 @@ tasks.register<Exec>("api-spec") {
 }
 
 tasks.withType<Test>() {
-    finalizedBy("api-spec")
+    finalizedBy("apiStyleCheck")
 }
