@@ -2,7 +2,6 @@
   "extends": "spectral:oas",
   "documentationUrl": "https://example.com/http-api.md",
   "rules": {
-    "openapi-tags": "error",
     "path-keys-no-trailing-slash": "error",
 
     "paths-kebab-case": {
