@@ -42,6 +42,8 @@ tasks.register<Exec>("api-spec") {
         "../spectral",
         "lint",
         "--ruleset", "../.spectral.json",
+        "--format", "junit",
+        "--output", "$buildDir/test-results/test/TEST-api-style-check.xml",
         "$buildDir/openapi.json"
     )
 }
