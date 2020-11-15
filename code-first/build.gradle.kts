@@ -35,6 +35,7 @@ tasks.register<Download>("spectralDownload") {
 
     src("https://github.com/stoplightio/spectral/releases/download/v5.7.1/$desiredApp")
     dest(File(rootDir, "spectral"))
+    overwrite(false)
 
     finalizedBy("spectralMakeExecutable")
 }

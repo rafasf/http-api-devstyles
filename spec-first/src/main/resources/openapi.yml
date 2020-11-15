@@ -1,0 +1,48 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - description: Generated server url
+    url: 'http://localhost:8080'
+paths:
+  /v1/products:
+    get:
+      operationId: all
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllProducts'
+      tags:
+        - products
+components:
+  schemas:
+    ProductRepresentation:
+      description: A representation of the Product.
+      type: object
+      required:
+        - description
+        - id
+      properties:
+        description:
+          description: Product description.
+          type: string
+          example: 'Not Fast, Not Furious'
+        id:
+          description: Product identifier.
+          type: string
+          example: dp54pp
+    AllProducts:
+      description: Container with products.
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          description: All products known.
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductRepresentation'
