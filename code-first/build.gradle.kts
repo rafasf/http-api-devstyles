@@ -1,5 +1,4 @@
 import com.rafasf.httpapi.devstyles.ApiStyleCheckTask
-import de.undercouch.gradle.tasks.download.Download
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 
 plugins {

@@ -7,5 +7,6 @@ import org.springframework.boot.runApplication
 class SpecFirstApplication
 
 fun main(args: Array<String>) {
+    @Suppress("SpreadOperator")
     runApplication<SpecFirstApplication>(*args)
 }
