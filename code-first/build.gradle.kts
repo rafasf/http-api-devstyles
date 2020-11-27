@@ -15,6 +15,10 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-webmvc-core:$springDocVersion")
 //    implementation("org.springdoc:springdoc-openapi-security:$springDocVersion")
     implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
+
+    testImplementation("au.com.dius.pact.consumer:junit5:4.1.0")
+    testImplementation("au.com.dius.pact.provider:junit5:4.1.0")
+    testImplementation("au.com.dius.pact.provider:junit5spring:4.1.0")
 }
 
 tasks.named<ApiStyleCheckTask>("apiStyleCheck").configure {
