@@ -20,3 +20,8 @@ data class ProductRepresentation(
     )
     val description: String
 )
+
+fun toProductRepresentation(product: Product) = ProductRepresentation(
+        id = product.id,
+        description = product.description
+)
