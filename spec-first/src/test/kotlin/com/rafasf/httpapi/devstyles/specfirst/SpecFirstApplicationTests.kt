@@ -9,5 +9,4 @@ class SpecFirstApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }

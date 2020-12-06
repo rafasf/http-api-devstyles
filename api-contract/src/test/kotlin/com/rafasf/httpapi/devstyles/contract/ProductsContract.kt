@@ -17,57 +17,59 @@ class ProductsContract {
     @Pact(provider = "ProductsProvider", consumer = "Self")
     fun `returns all products`(builder: PactDslWithProvider): RequestResponsePact {
         return builder
-                .given("products exist")
-                .uponReceiving("Get all products")
-                .path("/v1/products")
-                .method("GET")
-                .willRespondWith()
-                .status(200)
-                .body(
-                        PactDslJsonBody()
-                                .minArrayLike("data", 1)
-                                .stringType("id")
-                                .stringType("description")
-                                .closeObject()
-                                .closeArray()
-                ).toPact()
+            .given("products exist")
+            .uponReceiving("Get all products")
+            .path("/v1/products")
+            .method("GET")
+            .willRespondWith()
+            .status(200)
+            .body(
+                PactDslJsonBody()
+                    .minArrayLike("data", 1)
+                    .stringType("id")
+                    .stringType("description")
+                    .closeObject()
+                    .closeArray()
+            ).toPact()
     }
 
     @Pact(provider = "ProductsProvider", consumer = "Self")
     fun `returns an empty list when there no products`(builder: PactDslWithProvider): RequestResponsePact {
         return builder
-                .given("no products exist")
-                .uponReceiving("Get all products")
-                .path("/v1/products")
-                .method("GET")
-                .willRespondWith()
-                .status(200)
-                .body(
-                        PactDslJsonBody()
-                                .minArrayLike("data", 0)
-                                .closeObject()
-                ).toPact()
+            .given("no products exist")
+            .uponReceiving("Get all products")
+            .path("/v1/products")
+            .method("GET")
+            .willRespondWith()
+            .status(200)
+            .body(
+                PactDslJsonBody()
+                    .minArrayLike("data", 0)
+                    .closeObject()
+            ).toPact()
     }
 
     @Pact(provider = "ProductsProvider", consumer = "Self")
     fun `returns error when something goes wrong`(builder: PactDslWithProvider): RequestResponsePact {
         return builder
-                .given("something goes wrong")
-                .uponReceiving("Get all products")
-                .path("/v1/products")
-                .method("GET")
-                .willRespondWith()
-                .status(500)
-                .headers(
-                        mutableMapOf(
-                                Pair("Content-Type", "application/problem+json")))
-                .body(
-                        PactDslJsonBody()
-                                .stringValue("title", "Ooops")
-                                .stringValue("type", "about:blank")
-                                .stringValue("detail", "Failed to get all the necessary information")
-                                .numberValue("status", 503)
-                ).toPact()
+            .given("something goes wrong")
+            .uponReceiving("Get all products")
+            .path("/v1/products")
+            .method("GET")
+            .willRespondWith()
+            .status(500)
+            .headers(
+                mutableMapOf(
+                    Pair("Content-Type", "application/problem+json")
+                )
+            )
+            .body(
+                PactDslJsonBody()
+                    .stringValue("title", "Ooops")
+                    .stringValue("type", "about:blank")
+                    .stringValue("detail", "Failed to get all the necessary information")
+                    .numberValue("status", 503)
+            ).toPact()
     }
 
     @Test

@@ -22,6 +22,6 @@ data class ProductRepresentation(
 )
 
 fun toProductRepresentation(product: Product) = ProductRepresentation(
-        id = product.id,
-        description = product.description
+    id = product.id,
+    description = product.description
 )

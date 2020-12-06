@@ -3,7 +3,6 @@
   "documentationUrl": "https://example.com/http-api.md",
   "rules": {
     "path-keys-no-trailing-slash": "error",
-
     "paths-kebab-case": {
       "severity": "error",
       "description": "Paths are kebab-case.",
@@ -16,7 +15,6 @@
         }
       }
     },
-
     "response-codes": {
       "severity": "error",
       "description": "Only a subset of codes supposed to be used.",
@@ -30,7 +28,6 @@
         }
       }
     },
-
     "body-on-gets": {
       "severity": "error",
       "description": "A GET request must not accept a body.",
@@ -40,7 +37,6 @@
         "function": "falsy"
       }
     },
-
     "x-headers": {
       "severity": "error",
       "description": "Please do not use headers with X-",
@@ -53,7 +49,6 @@
         }
       }
     },
-
     "unknown-error-format": {
       "severity": "error",
       "description": "Error response must follow known structure.",
@@ -69,7 +64,6 @@
         }
       }
     },
-
     "default-response": {
       "severity": "error",
       "description": "Responses should be explicit.",

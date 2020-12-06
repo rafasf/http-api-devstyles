@@ -14,8 +14,10 @@ import org.springframework.test.web.servlet.get
 
 @WebMvcTest(Products::class)
 class ProductsTest {
-    @Autowired lateinit var mockMvc: MockMvc
-    @MockBean lateinit var productsSource: ProductsSource
+    @Autowired
+    lateinit var mockMvc: MockMvc
+    @MockBean
+    lateinit var productsSource: ProductsSource
 
     @Test
     fun `returns all products`() {
@@ -24,9 +26,9 @@ class ProductsTest {
         given(productsSource.all()).willReturn(Either.right(listKOf(product)))
 
         mockMvc.get("/v1/products")
-                .andExpect { status { isOk() } }
-                .andExpect { jsonPath("$.data[0].id", equalTo(product.id)) }
-                .andExpect { jsonPath("$.data[0].description", equalTo(product.description)) }
+            .andExpect { status { isOk() } }
+            .andExpect { jsonPath("$.data[0].id", equalTo(product.id)) }
+            .andExpect { jsonPath("$.data[0].description", equalTo(product.description)) }
     }
 
     @Test
@@ -34,8 +36,8 @@ class ProductsTest {
         given(productsSource.all()).willReturn(Either.right(listKOf()))
 
         mockMvc.get("/v1/products")
-                .andExpect { status { isOk() } }
-                .andExpect { jsonPath<Collection<Any>>("$.data", hasSize(0)) }
+            .andExpect { status { isOk() } }
+            .andExpect { jsonPath<Collection<Any>>("$.data", hasSize(0)) }
     }
 
     @Test
@@ -43,10 +45,10 @@ class ProductsTest {
         given(productsSource.all()).willReturn(Either.left(NoProducts(description = "ops")))
 
         mockMvc.get("/v1/products")
-                .andExpect { status { isInternalServerError() } }
-                .andExpect { jsonPath("$.title", equalTo("No products")) }
-                .andExpect { jsonPath("$.type", equalTo("about:blank")) }
-                .andExpect { jsonPath("$.status", equalTo(500)) }
-                .andExpect { jsonPath("$.detail", equalTo("ops")) }
+            .andExpect { status { isInternalServerError() } }
+            .andExpect { jsonPath("$.title", equalTo("No products")) }
+            .andExpect { jsonPath("$.type", equalTo("about:blank")) }
+            .andExpect { jsonPath("$.status", equalTo(500)) }
+            .andExpect { jsonPath("$.detail", equalTo("ops")) }
     }
 }

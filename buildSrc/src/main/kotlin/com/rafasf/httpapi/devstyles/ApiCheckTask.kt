@@ -1,9 +1,7 @@
 package com.rafasf.httpapi.devstyles
 
-import org.gradle.api.provider.Property
 import org.gradle.api.tasks.*
 import org.gradle.kotlin.dsl.property
-import org.gradle.language.base.plugins.LifecycleBasePlugin
 import java.io.File
 
 open class ApiStyleCheckTask : AbstractExecTask<ApiStyleCheckTask>(ApiStyleCheckTask::class.java) {

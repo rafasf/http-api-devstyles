@@ -20,7 +20,8 @@ import org.springframework.test.web.servlet.get
 @Provider("ProductsProvider")
 @PactFolder("build/pacts")
 class ProductsContractVerification {
-    @Autowired lateinit var mockMvc: MockMvc
+    @Autowired
+    lateinit var mockMvc: MockMvc
 
     @TestTemplate
     @ExtendWith(PactVerificationInvocationContextProvider::class)
@@ -34,5 +35,6 @@ class ProductsContractVerification {
     }
 
     @State("products exist")
-    fun productsExist() { }
+    fun productsExist() {
+    }
 }
